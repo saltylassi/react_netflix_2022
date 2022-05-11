@@ -6,10 +6,10 @@ import useHeader from '../hooks/useHeader';
 
 interface IProps {}
 const Header: React.FC<IProps> = () => {
-  const { isVisibleSearchInput, handleSearchClick } = useHeader();
+  const { isVisibleSearchInput, inputAnimation, handleSearchClick, bgAnimation } = useHeader();
 
   return (
-    <Container>
+    <Container animate={bgAnimation} transition={{ duration: 1 }} initial="top" variants={bgVariant}>
       <InnerContainer>
         <Logo
           variants={logoVariants}
@@ -26,8 +26,9 @@ const Header: React.FC<IProps> = () => {
         <Nav element={'TV Shows'} path="/tv" />
       </InnerContainer>
       <InnerContainer>
-        <Search onClick={() => handleSearchClick()}>
+        <Search>
           <motion.svg
+            onClick={() => handleSearchClick()}
             xmlns="http://www.w3.org/2000/svg"
             width="25"
             height="25"
@@ -43,14 +44,18 @@ const Header: React.FC<IProps> = () => {
               d="M500.3 443.7l-119.7-119.7c27.22-40.41 40.65-90.9 33.46-144.7C401.8 87.79 326.8 13.32 235.2 1.723C99.01-15.51-15.51 99.01 1.724 235.2c11.6 91.64 86.08 166.7 177.6 178.9c53.8 7.189 104.3-6.236 144.7-33.46l119.7 119.7c15.62 15.62 40.95 15.62 56.57 0C515.9 484.7 515.9 459.3 500.3 443.7zM79.1 208c0-70.58 57.42-128 128-128s128 57.42 128 128c0 70.58-57.42 128-128 128S79.1 278.6 79.1 208z"
             />
           </motion.svg>
-          {isVisibleSearchInput ? (
-            <SearchInput
-              placeholder="Search for movie or tvShow"
-              variants={searchVariants}
-              initial="normal"
-              animate="active"
-            />
-          ) : null}
+
+          <SearchInput
+            placeholder="Search for movie or tvShow"
+            initial={{
+              scaleX: 0,
+            }}
+            transition={{
+              type: 'linear',
+              duration: 0.1,
+            }}
+            animate={inputAnimation}
+          />
         </Search>
       </InnerContainer>
     </Container>
@@ -59,16 +64,16 @@ const Header: React.FC<IProps> = () => {
 
 export default Header;
 
-const Container = styled.div`
+const Container = styled(motion.div)`
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
-  background-color: black;
+  align-items: center;
   position: fixed;
-  color: white;
-  width: 100vw;
-  height: 5vh;
+  width: 100%;
+  left: 0;
+  font-size: 14px;
   padding: 20px 60px;
+  color: white;
 `;
 
 const InnerContainer = styled.div`
@@ -104,7 +109,9 @@ const SearchInput = styled(motion.input)`
   left: -11rem;
   height: 2.2rem;
   width: 15rem;
-  text-align: center;
+  padding-left: 3em;
+  background-color: ${(props) => props.theme.black.darker};
+  color: ${(props) => props.theme.white.darker};
 `;
 
 const logoVariants = {
@@ -119,14 +126,11 @@ const logoVariants = {
   },
 };
 
-const searchVariants = {
-  normal: {
-    scaleX: 0,
+const bgVariant = {
+  top: {
+    backgroundColor: 'black',
   },
-  active: {
-    scaleX: 1,
-    transition: {
-      duration: 0.1,
-    },
+  scroll: {
+    backgroundColor: 'transparent',
   },
 };
