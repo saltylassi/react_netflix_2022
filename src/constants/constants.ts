@@ -5,4 +5,5 @@ export const padding = {
 
 export const constants = {
   innerWidth: window.innerWidth,
+  sliderOffset: 6,
 };

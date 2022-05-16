@@ -16,7 +16,11 @@ const Home: React.FC<IProps> = () => {
         overview={nowPlayingMovies?.results[0].overview || ''}
         bgImageID={nowPlayingMovies?.results[0].backdrop_path || ''}
       />
-      <ImageSlider imgPaths={nowPlayingMovies?.results.slice(0, 6).map((result) => result.poster_path) || []} />
+      <ImageSlider
+        titles={nowPlayingMovies?.results || []}
+        totalLength={nowPlayingMovies?.results.length || 0}
+        imgPaths={nowPlayingMovies?.results.map((result) => result.poster_path) || []}
+      />
     </Container>
   );
 };
@@ -30,4 +34,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   margin: auto 0;
+
+  //이중스크롤
+  overflow: hidden;
 `;
