@@ -2,25 +2,29 @@ import React from 'react';
 import styled from 'styled-components';
 import Banner from '../components/Banner';
 import ImageSlider from '../components/ImageSlider';
+import MovieModal from '../components/MovieModal';
 import useHome from '../hooks/useHome';
 
 interface IProps {}
+
 const Home: React.FC<IProps> = () => {
-  const { isLoading, nowPlayingMovies, error } = useHome();
+  const { isLoading, nowPlayingMovies: data, movieMatch } = useHome();
   return isLoading ? (
     <Container>loading</Container>
   ) : (
     <Container>
       <Banner
-        title={nowPlayingMovies?.results[0].title || ''}
-        overview={nowPlayingMovies?.results[0].overview || ''}
-        bgImageID={nowPlayingMovies?.results[0].backdrop_path || ''}
+        title={data?.results[0].title || ''}
+        overview={data?.results[0].overview || ''}
+        bgImageID={data?.results[0].backdrop_path || ''}
       />
       <ImageSlider
-        titles={nowPlayingMovies?.results || []}
-        totalLength={nowPlayingMovies?.results.length || 0}
-        imgPaths={nowPlayingMovies?.results.map((result) => result.poster_path) || []}
+        titles={data?.results || []}
+        totalLength={data?.results.length || 0}
+        imgPaths={data?.results.map((result) => result.poster_path) || []}
+        ids={data?.results.map((result) => result.id) || []}
       />
+      {movieMatch && <MovieModal movie={data?.results.find((movie) => movie.id.toString() === movieMatch.params.id)} />}
     </Container>
   );
 };
@@ -35,6 +39,6 @@ const Container = styled.div`
   justify-content: flex-start;
   margin: auto 0;
 
-  //이중스크롤
+  //임시, 이중스크롤
   overflow: hidden;
 `;

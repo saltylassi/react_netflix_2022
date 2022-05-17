@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { constants } from '../constants/constants';
+import { useNavigate } from 'react-router-dom';
 
 const useSlider = (totalLength: number) => {
   const [idx, setIdx] = useState<number>(0);
   const [progress, setProgress] = useState<boolean>(false);
-
-  console.log(idx);
+  const navigate = useNavigate();
 
   const increaseIdx = () => {
     if (progress) {
@@ -18,7 +18,11 @@ const useSlider = (totalLength: number) => {
 
   const handleExit = () => setProgress(() => false);
 
-  return { idx, increaseIdx, handleExit };
+  const handleClick = (id: number) => {
+    navigate(`/movies/${id}`);
+  };
+
+  return { idx, increaseIdx, handleExit, handleClick };
 };
 
 export default useSlider;

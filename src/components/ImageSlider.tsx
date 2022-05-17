@@ -8,17 +8,18 @@ interface IProps {
   imgPaths: string[];
   totalLength: number;
   titles: Array<{ title: string }>;
+  ids: Array<number>;
 }
 
-const ImageSlider: React.FC<IProps> = ({ imgPaths, totalLength, titles }) => {
-  const { idx, increaseIdx, handleExit } = useSlider(totalLength);
+const ImageSlider: React.FC<IProps> = ({ imgPaths, totalLength, titles, ids }) => {
+  const { idx, increaseIdx, handleExit, handleClick } = useSlider(totalLength);
 
   return (
     <Container>
       <AnimatePresence initial={false} onExitComplete={handleExit}>
         <Wrapper
           key={idx}
-          variants={animationVariants.WrapperVariants}
+          variants={animationVars.WrapperVariants}
           initial="hidden"
           animate="visible"
           exit="exit"
@@ -27,13 +28,17 @@ const ImageSlider: React.FC<IProps> = ({ imgPaths, totalLength, titles }) => {
           {imgPaths.slice(constants.sliderOffset * idx, constants.sliderOffset * (idx + 1)).map((path, index) => {
             return (
               <Item
+                layoutId={ids[index].toString()}
                 key={path}
                 bgPath={utils.makeImagePath(path, 'w500')}
-                variants={animationVariants.scaleVariants}
+                variants={animationVars.scaleVariants}
                 initial="normal"
                 whileHover="hover"
+                onClick={() => {
+                  handleClick(ids[index]);
+                }}
               >
-                <Info variants={animationVariants.infoVariants}>
+                <Info variants={animationVars.infoVariants}>
                   <InfoText>{titles[index].title}</InfoText>
                 </Info>
               </Item>
@@ -77,6 +82,7 @@ const Item = styled(motion.div)<{ bgPath: string }>`
   &:last-child {
     transform-origin: center right;
   }
+  cursor: pointer;
 `;
 
 const Info = styled(motion.div)`
@@ -102,7 +108,7 @@ const ArrowButton = styled.div`
   background-color: red;
 `;
 
-const animationVariants = {
+const animationVars = {
   WrapperVariants: {
     hidden: {
       x: constants.innerWidth + 16,

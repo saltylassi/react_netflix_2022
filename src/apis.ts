@@ -7,6 +7,9 @@ const apis = {
       return res.json();
     });
   },
+  getMovie: (id: string) => {
+    return fetch(`${BASE_URL}/movie/${id}?api_key=${API_KEY}`).then((res) => res.json());
+  },
 };
 
 export default apis;

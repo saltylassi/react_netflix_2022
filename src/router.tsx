@@ -12,6 +12,7 @@ const Router = () => {
         <Route path="/tv" element={<TV />}></Route>
         <Route path="/search" element={<Search />}></Route>
         <Route path="/" element={<Home />}></Route>
+        <Route path="/movies/:id" element={<Home />}></Route>
       </Routes>
     </MainRouter>
   );

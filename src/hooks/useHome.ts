@@ -1,7 +1,8 @@
 import { useQuery } from 'react-query';
+import { useMatch } from 'react-router-dom';
 import apis from '../apis';
 
-interface IMovieResult {
+export interface IMovieResult {
   adult: boolean;
   backdrop_path: string;
   genre_ids: Array<number>;
@@ -35,7 +36,9 @@ const useHome = () => {
     error,
   } = useQuery<IResponse>(['movies', 'nowPlaying'], apis.getNowPlayingMovies);
 
-  return { isLoading, nowPlayingMovies, error };
+  const movieMatch = useMatch('/movies/:id');
+
+  return { isLoading, nowPlayingMovies, error, movieMatch };
 };
 
 export default useHome;
