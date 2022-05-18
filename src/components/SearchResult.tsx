@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import useSearchResult, { ISearchMovieResult, ISearchTVResult } from '../hooks/useSearchResult';
-import BodyLayout from '../layouts/BodyLayout';
 
 interface IProps {
   title: string;

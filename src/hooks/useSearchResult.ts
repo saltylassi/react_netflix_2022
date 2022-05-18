@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import apis from '../apis';
 
@@ -42,9 +43,17 @@ export interface ISearchTVResult {
 }
 
 const useSearchResult = (type: string, keyword: string) => {
-  const { isLoading, data } = useQuery<IResponse>(type, () =>
+  const { isLoading, data } = useQuery<IResponse>([type, keyword], () =>
     apis.getSearchResults(type === 'Movies' ? 'movie' : 'tv', keyword)
   );
+
+  useEffect(() => {
+    console.log('data changed', data);
+  }, [data]);
+
+  useEffect(() => {
+    console.log('keyword changed', keyword);
+  }, [keyword]);
 
   return { isLoading, data };
 };
