@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import useSearchResult, { ISearchMovieResult, ISearchTVResult } from '../hooks/useSearchResult';
 import BodyLayout from '../layouts/BodyLayout';
 
 interface IProps {
@@ -7,22 +8,45 @@ interface IProps {
 }
 
 const SearchResult: React.FC<IProps> = ({ title, keyword }) => {
-  return (
-    <BodyLayout>
+  const { isLoading, data: response } = useSearchResult(title, keyword);
+  return isLoading ? (
+    <Container>searching</Container>
+  ) : (
+    <Container>
       <TitleContainer>
         <Title>{title}</Title>
       </TitleContainer>
-      <PosterContainer></PosterContainer>
-    </BodyLayout>
+      <PosterContainer>
+        {response?.results.map((result) => {
+          const isMovie = title === 'Movies';
+          if (isMovie) {
+            const typed = result as ISearchMovieResult;
+            return <Poster key={result.id}>{typed.title}</Poster>;
+          } else {
+            const typed = result as ISearchTVResult;
+            return <Poster key={result.id}>{typed.name}</Poster>;
+          }
+        })}
+      </PosterContainer>
+    </Container>
   );
 };
 
 export default SearchResult;
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 5rem 0;
+`;
+
 const TitleContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 2rem 0;
 `;
 
 const Title = styled.span`
@@ -34,7 +58,8 @@ const PosterContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 1rem 0.5rem;
-  margin: 0 auto;
 `;
 
-const Poster = styled.div``;
+const Poster = styled.div`
+  width: 20rem;
+`;
