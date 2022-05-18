@@ -6,7 +6,8 @@ import useHeader from '../hooks/useHeader';
 
 interface IProps {}
 const Header: React.FC<IProps> = () => {
-  const { isVisibleSearchInput, inputAnimation, handleSearchClick, bgAnimation } = useHeader();
+  const { isVisibleSearchInput, inputAnimation, handleSearchClick, bgAnimation, register, handleSubmit, onValid } =
+    useHeader();
 
   return (
     <Container animate={bgAnimation} transition={{ duration: 1 }} initial="top" variants={bgVariant}>
@@ -26,7 +27,7 @@ const Header: React.FC<IProps> = () => {
         <Nav element={'TV Shows'} path="/tv" />
       </InnerContainer>
       <InnerContainer>
-        <Search>
+        <Search onSubmit={handleSubmit(onValid)}>
           <motion.svg
             onClick={() => handleSearchClick()}
             xmlns="http://www.w3.org/2000/svg"
@@ -46,6 +47,7 @@ const Header: React.FC<IProps> = () => {
           </motion.svg>
 
           <SearchInput
+            {...register('keyword', { required: true, minLength: 2, maxLength: 20 })}
             placeholder="Search for movie or tvShow"
             initial={{
               scaleX: 0,
@@ -94,7 +96,7 @@ const Logo = styled(motion.svg)`
   }
 `;
 
-const Search = styled.div`
+const Search = styled.form`
   margin-right: 0.5rem;
   width: 1.5rem;
   height: 1.5rem;
