@@ -40,12 +40,12 @@ const ImageSlider: React.FC<IProps> = ({ imgPaths, totalLength, titles, ids, mai
                 initial="normal"
                 whileHover="hover"
                 onClick={() => {
-                  handleClick(ids[index]);
-                  handleID(ids[index].toString());
+                  handleClick(ids[constants.sliderOffset * idx + index]);
+                  handleID(ids[constants.sliderOffset * idx + index].toString());
                 }}
               >
                 <Info variants={animationVars.infoVariants}>
-                  <InfoText>{titles[index].title}</InfoText>
+                  <InfoText>{titles[constants.sliderOffset * idx + index].title}</InfoText>
                 </Info>
               </Item>
             );
