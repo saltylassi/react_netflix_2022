@@ -8,11 +8,10 @@ import { utils } from '../utils';
 interface IProps {
   mainTitle: string;
   results: IMovieResult[];
-  handleID: (id: string) => void;
 }
 
-const ImageSlider: React.FC<IProps> = ({ mainTitle, results, handleID }) => {
-  const { idx, increaseIdx, handleExit, handleClick } = useSlider(results.length);
+const ImageSlider: React.FC<IProps> = ({ mainTitle, results }) => {
+  const { idx, increaseIdx, handleExit, handleClick } = useSlider(results.length, mainTitle);
 
   return (
     <Container>
@@ -28,18 +27,17 @@ const ImageSlider: React.FC<IProps> = ({ mainTitle, results, handleID }) => {
           exit="exit"
           transition={{ type: 'tween', duration: 1 }}
         >
-          {results.slice(constants.sliderOffset * idx, constants.sliderOffset * (idx + 1)).map((result, index) => {
+          {results.slice(constants.sliderOffset * idx, constants.sliderOffset * (idx + 1)).map((result) => {
             return (
               <Item
-                layoutId={result.id.toString() + idx}
+                layoutId={`${mainTitle}-${result.id}`}
                 key={result.poster_path + result.id.toString()}
                 bgPath={utils.makeImagePath(result.poster_path, 'w500')}
                 variants={animationVars.scaleVariants}
                 initial="normal"
                 whileHover="hover"
                 onClick={() => {
-                  handleClick(result.id);
-                  handleID(result.id.toString());
+                  handleClick(mainTitle, result.id);
                 }}
               >
                 <Info variants={animationVars.infoVariants}>

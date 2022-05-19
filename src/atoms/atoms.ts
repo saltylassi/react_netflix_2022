@@ -5,7 +5,12 @@ export const isModalOpen = atom({
   default: false,
 });
 
-export const modalGroupID = atom({
-  key: 'modalGroupID',
+export const sourceID = atom({
+  key: 'sourceID',
+  default: 'undefined',
+});
+
+export const sourceGroupID = atom({
+  key: 'sourceGroupID',
   default: 'undefined',
 });

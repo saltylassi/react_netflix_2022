@@ -4,12 +4,10 @@ import { constants } from '../constants/constants';
 import useModalPoster from '../hooks/useModalPoster';
 import { utils } from '../utils';
 
-interface IProps {
-  targetID: string;
-}
+interface IProps {}
 
-const ModalPoster: React.FC<IProps> = ({ targetID }) => {
-  const { isLoading, handleOverlayClick, scrollInfo, data } = useModalPoster('movie', targetID);
+const ModalPoster: React.FC<IProps> = () => {
+  const { isLoading, handleOverlayClick, scrollInfo, data, targetID, groupID } = useModalPoster('movie');
 
   return (
     <AnimatePresence>
@@ -21,11 +19,11 @@ const ModalPoster: React.FC<IProps> = ({ targetID }) => {
           transition={{ duration: 0.2 }}
         />
         {isLoading ? (
-          <Poster layoutId={targetID} scrollInfo={scrollInfo}>
+          <Poster layoutId={`${groupID}-${targetID}`} scrollInfo={scrollInfo}>
             loading
           </Poster>
         ) : (
-          <Poster layoutId={targetID} scrollInfo={scrollInfo}>
+          <Poster layoutId={`${groupID}-${targetID}`} scrollInfo={scrollInfo}>
             <BGImg bgPath={utils.makeImagePath(data.backdrop_path)} />
             <span>{'//TODO addContents'}</span>
             <PosterContentsColumn>

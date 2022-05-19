@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useMatch } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import apis from '../apis';
 import { isModalOpen } from '../atoms/atoms';
 
@@ -43,14 +43,7 @@ const useHome = () => {
     apis.getMovies('upcoming')
   );
 
-  const movieMatch = useMatch('/movies/:id');
-  const [id, setId] = useState<string>('null');
-  const [modalOpen, setModalOpen] = useRecoilState(isModalOpen);
-
-  const handlePosterClick = (id: string) => {
-    setId(() => id);
-    setModalOpen(() => true);
-  };
+  const modalOpen = useRecoilValue(isModalOpen);
 
   return {
     npMVLoading,
@@ -59,9 +52,6 @@ const useHome = () => {
     nowPlayingMovies,
     popularMovies,
     upcomingMovies,
-    movieMatch,
-    id,
-    handlePosterClick,
     modalOpen,
   };
 };

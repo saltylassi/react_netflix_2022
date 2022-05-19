@@ -8,17 +8,7 @@ import BodyLayout from '../layouts/BodyLayout';
 interface IProps {}
 
 const Home: React.FC<IProps> = () => {
-  const {
-    npMVLoading,
-    pMVLoading,
-    uMVLoading,
-    nowPlayingMovies,
-    popularMovies,
-    upcomingMovies,
-    handlePosterClick,
-    id: modalTargetID,
-    modalOpen,
-  } = useHome();
+  const { npMVLoading, pMVLoading, uMVLoading, nowPlayingMovies, popularMovies, upcomingMovies, modalOpen } = useHome();
   const isLoading = npMVLoading || pMVLoading || uMVLoading;
 
   return isLoading ? (
@@ -30,10 +20,10 @@ const Home: React.FC<IProps> = () => {
         overview={nowPlayingMovies?.results[0].overview || ''}
         bgImageID={nowPlayingMovies?.results[0].backdrop_path || ''}
       />
-      <ImageSlider mainTitle="nowPlaying" results={nowPlayingMovies?.results || []} handleID={handlePosterClick} />
-      <ImageSlider mainTitle="upcoming" results={upcomingMovies?.results || []} handleID={handlePosterClick} />
-      <ImageSlider mainTitle="popular" results={popularMovies?.results || []} handleID={handlePosterClick} />
-      {modalOpen && <ModalPoster targetID={modalTargetID} />}
+      <ImageSlider mainTitle="nowPlaying" results={nowPlayingMovies?.results || []} />
+      <ImageSlider mainTitle="upcoming" results={upcomingMovies?.results || []} />
+      <ImageSlider mainTitle="popular" results={popularMovies?.results || []} />
+      {modalOpen && <ModalPoster />}
     </BodyLayout>
   );
 };

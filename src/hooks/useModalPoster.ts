@@ -1,22 +1,24 @@
 import { useViewportScroll } from 'framer-motion';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import apis from '../apis';
-import { isModalOpen } from '../atoms/atoms';
+import { isModalOpen, sourceGroupID, sourceID } from '../atoms/atoms';
 
-const useModalPoster = (type: string, id: string) => {
+const useModalPoster = (type: string) => {
   const navigate = useNavigate();
   const scrollInfo = useViewportScroll();
-  const { isLoading, data } = useQuery(['modalPoster', id, type], () => apis.getDetail(type, id));
   const setModalOpen = useSetRecoilState(isModalOpen);
+  const targetID = useRecoilValue(sourceID);
+  const { isLoading, data } = useQuery(['modalPoster', targetID, type], () => apis.getDetail(type, targetID));
+  const groupID = useRecoilValue(sourceGroupID);
 
   const handleOverlayClick = () => {
     setModalOpen((prev) => false);
     navigate('/');
   };
 
-  return { isLoading, handleOverlayClick, scrollInfo, data };
+  return { isLoading, handleOverlayClick, scrollInfo, data, targetID, groupID };
 };
 
 export default useModalPoster;
