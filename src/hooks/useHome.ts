@@ -40,7 +40,7 @@ const useHome = () => {
     apis.getMovies('upcoming')
   );
 
-  const movieMatch = useMatch('/movies/:id');
+  const movieMatch = useMatch('/movie/:id');
 
   return { npMVLoading, pMVLoading, uMVLoading, nowPlayingMovies, popularMovies, upcomingMovies, movieMatch };
 };

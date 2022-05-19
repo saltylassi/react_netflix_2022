@@ -33,7 +33,7 @@ const ImageSlider: React.FC<IProps> = ({ imgPaths, totalLength, titles, ids, mai
             return (
               <Item
                 layoutId={path + ids[index].toString()}
-                key={path}
+                key={path + ids[index].toString()}
                 bgPath={utils.makeImagePath(path, 'w500')}
                 variants={animationVars.scaleVariants}
                 initial="normal"
