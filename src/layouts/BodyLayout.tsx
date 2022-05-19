@@ -18,7 +18,8 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   margin: auto 0;
-
+  padding: 2rem 0;
+  margin: 2rem 0;
   //임시, 이중스크롤
   overflow: hidden;
 `;

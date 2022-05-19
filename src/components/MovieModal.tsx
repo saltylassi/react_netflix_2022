@@ -24,7 +24,7 @@ const MovieModal: React.FC<IProps> = ({ movie }) => {
           />
           <Poster layoutId={movieMatch.params.id} scrollInfo={scrollInfo}>
             <BGImg bgPath={utils.makeImagePath(movie.backdrop_path)} />
-            //TODO addContents
+            <span>{'//TODO addContents'}</span>
             <PosterContentsColumn>
               <Text>{movie.title}</Text>
             </PosterContentsColumn>

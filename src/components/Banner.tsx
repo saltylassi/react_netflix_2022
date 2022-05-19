@@ -32,6 +32,8 @@ const Container = styled.div<{ bgImage: string }>`
   width: 100vw;
   height: 100vh;
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url(${(props) => props.bgImage});
+  border-bottom-left-radius: 3rem;
+  border-bottom-right-radius: 3rem;
 `;
 
 const TitleContainer = styled.div`

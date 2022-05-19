@@ -30,15 +30,19 @@ interface IResponse {
 }
 
 const useHome = () => {
-  const {
-    isLoading,
-    data: nowPlayingMovies,
-    error,
-  } = useQuery<IResponse>(['movies', 'nowPlaying'], apis.getNowPlayingMovies);
+  const { isLoading: npMVLoading, data: nowPlayingMovies } = useQuery<IResponse>(['movies', 'nowPlaying'], () =>
+    apis.getMovies('now_playing')
+  );
+  const { isLoading: pMVLoading, data: popularMovies } = useQuery<IResponse>(['movies', 'popular'], () =>
+    apis.getMovies('popular')
+  );
+  const { isLoading: uMVLoading, data: upcomingMovies } = useQuery<IResponse>(['movies', 'upcoming'], () =>
+    apis.getMovies('upcoming')
+  );
 
   const movieMatch = useMatch('/movies/:id');
 
-  return { isLoading, nowPlayingMovies, error, movieMatch };
+  return { npMVLoading, pMVLoading, uMVLoading, nowPlayingMovies, popularMovies, upcomingMovies, movieMatch };
 };
 
 export default useHome;

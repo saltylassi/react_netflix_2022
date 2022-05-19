@@ -5,17 +5,21 @@ import useSlider from '../hooks/useSlider';
 import { utils } from '../utils';
 
 interface IProps {
+  mainTitle: string;
   imgPaths: string[];
   totalLength: number;
   titles: Array<{ title: string }>;
   ids: Array<number>;
 }
 
-const ImageSlider: React.FC<IProps> = ({ imgPaths, totalLength, titles, ids }) => {
+const ImageSlider: React.FC<IProps> = ({ imgPaths, totalLength, titles, ids, mainTitle }) => {
   const { idx, increaseIdx, handleExit, handleClick } = useSlider(totalLength);
 
   return (
     <Container>
+      <MainTitleContainer>
+        <MainTitle>{mainTitle}</MainTitle>
+      </MainTitleContainer>
       <AnimatePresence initial={false} onExitComplete={handleExit}>
         <Wrapper
           key={idx}
@@ -28,7 +32,7 @@ const ImageSlider: React.FC<IProps> = ({ imgPaths, totalLength, titles, ids }) =
           {imgPaths.slice(constants.sliderOffset * idx, constants.sliderOffset * (idx + 1)).map((path, index) => {
             return (
               <Item
-                layoutId={ids[index].toString()}
+                layoutId={path + ids[index].toString()}
                 key={path}
                 bgPath={utils.makeImagePath(path, 'w500')}
                 variants={animationVars.scaleVariants}
@@ -55,9 +59,24 @@ export default ImageSlider;
 
 const Container = styled.div`
   position: relative;
-  top: -15rem;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 20vh;
+  margin: 2rem 0;
 `;
+
+const MainTitleContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 20%;
+  margin: 1rem 1rem;
+`;
+
+const MainTitle = styled.span``;
 
 const Wrapper = styled(motion.div)`
   //TODO 이중 스크롤바 해결
@@ -68,6 +87,7 @@ const Wrapper = styled(motion.div)`
   padding: 0 ${padding.hPadding};
   position: absolute;
   width: 100%;
+  top: 4rem;
 `;
 
 const Item = styled(motion.div)<{ bgPath: string }>`
@@ -105,7 +125,7 @@ const ArrowButton = styled.div`
   right: 0.1rem;
   height: 100%;
   font-size: 5rem;
-  background-color: red;
+  top: 5rem;
 `;
 
 const animationVars = {
