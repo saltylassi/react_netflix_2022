@@ -6,10 +6,18 @@ import useHeader from '../hooks/useHeader';
 
 interface IProps {}
 const Header: React.FC<IProps> = () => {
-  const { isVisibleSearchInput, inputAnimation, handleSearchClick, bgAnimation, register, handleSubmit, onValid } =
-    useHeader();
+  const {
+    isVisibleSearchInput,
+    inputAnimation,
+    handleSearchClick,
+    bgAnimation,
+    register,
+    handleSubmit,
+    onValid,
+    modalOpen,
+  } = useHeader();
 
-  return (
+  return modalOpen ? null : (
     <Container animate={bgAnimation} transition={{ duration: 1 }} initial="top" variants={bgVariant}>
       <InnerContainer>
         <Logo

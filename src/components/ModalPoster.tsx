@@ -47,7 +47,8 @@ export default ModalPoster;
 const ModalOverlay = styled(motion.div)`
   position: fixed;
   width: 100vw;
-  height: ${constants.innerHeight}px;
+  height: 100vh;
+  top: 0;
   background-color: rgba(0, 0, 0, 0.5);
   opacity: 0;
 `;

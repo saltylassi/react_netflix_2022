@@ -1,7 +1,9 @@
 import { useAnimation, useViewportScroll } from 'framer-motion';
-import { FormEvent, useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { isModalOpen } from '../atoms/atoms';
 
 interface IForm {
   keyword: string;
@@ -14,6 +16,7 @@ const useHeader = () => {
   const { scrollY } = useViewportScroll();
   const { register, handleSubmit } = useForm<IForm>();
   const Navigate = useNavigate();
+  const modalOpen = useRecoilValue(isModalOpen);
 
   useEffect(() => {
     scrollY.onChange(() => {
@@ -32,7 +35,16 @@ const useHeader = () => {
     Navigate(`/search?keyword=${data.keyword}`);
   };
 
-  return { inputAnimation, isVisibleSearchInput, handleSearchClick, bgAnimation, register, handleSubmit, onValid };
+  return {
+    inputAnimation,
+    isVisibleSearchInput,
+    handleSearchClick,
+    bgAnimation,
+    register,
+    handleSubmit,
+    onValid,
+    modalOpen,
+  };
 };
 
 export default useHeader;
