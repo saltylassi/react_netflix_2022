@@ -17,7 +17,7 @@ const Home: React.FC<IProps> = () => {
     upcomingMovies,
     handlePosterClick,
     id: modalTargetID,
-    movieMatch,
+    modalOpen,
   } = useHome();
   const isLoading = npMVLoading || pMVLoading || uMVLoading;
 
@@ -54,7 +54,7 @@ const Home: React.FC<IProps> = () => {
         ids={popularMovies?.results.map((result) => result.id) || []}
         handleID={handlePosterClick}
       />
-      {movieMatch && <ModalPoster targetID={modalTargetID} />}
+      {modalOpen && <ModalPoster targetID={modalTargetID} />}
     </BodyLayout>
   );
 };

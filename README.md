@@ -12,3 +12,8 @@ TODO
 - [ ] Search, Link
 
 - [ ] Detail Screen
+
+bug
+
+- [ ] ModalOverlay, Header
+- [ ] ImageSlider

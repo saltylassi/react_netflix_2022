@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useMatch } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 import apis from '../apis';
+import { isModalOpen } from '../atoms/atoms';
 
 export interface IMovieResult {
   adult: boolean;
@@ -42,11 +44,12 @@ const useHome = () => {
   );
 
   const movieMatch = useMatch('/movies/:id');
-
   const [id, setId] = useState<string>('null');
+  const [modalOpen, setModalOpen] = useRecoilState(isModalOpen);
 
   const handlePosterClick = (id: string) => {
     setId(() => id);
+    setModalOpen(() => true);
   };
 
   return {
@@ -59,6 +62,7 @@ const useHome = () => {
     movieMatch,
     id,
     handlePosterClick,
+    modalOpen,
   };
 };
 

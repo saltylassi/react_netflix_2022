@@ -1,19 +1,22 @@
 import { useViewportScroll } from 'framer-motion';
 import { useQuery } from 'react-query';
-import { useMatch, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useSetRecoilState } from 'recoil';
 import apis from '../apis';
+import { isModalOpen } from '../atoms/atoms';
 
 const useModalPoster = (type: string, id: string) => {
-  const movieMatch = useMatch('/movies/:id');
   const navigate = useNavigate();
   const scrollInfo = useViewportScroll();
   const { isLoading, data } = useQuery(['modalPoster', id, type], () => apis.getDetail(type, id));
+  const setModalOpen = useSetRecoilState(isModalOpen);
 
-  const handleClick = () => {
+  const handleOverlayClick = () => {
+    setModalOpen((prev) => false);
     navigate('/');
   };
 
-  return { movieMatch, handleClick, scrollInfo, data };
+  return { isLoading, handleOverlayClick, scrollInfo, data };
 };
 
 export default useModalPoster;

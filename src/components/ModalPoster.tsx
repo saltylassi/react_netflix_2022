@@ -1,7 +1,6 @@
 import { AnimatePresence, motion, ScrollMotionValues } from 'framer-motion';
 import styled from 'styled-components';
 import { constants } from '../constants/constants';
-import { IMovieResult } from '../hooks/useHome';
 import useModalPoster from '../hooks/useModalPoster';
 import { utils } from '../utils';
 
@@ -10,19 +9,21 @@ interface IProps {
 }
 
 const ModalPoster: React.FC<IProps> = ({ targetID }) => {
-  const { movieMatch, handleClick, scrollInfo, data } = useModalPoster('movie', targetID);
+  const { isLoading, handleOverlayClick, scrollInfo, data } = useModalPoster('movie', targetID);
 
   return (
     <AnimatePresence>
-      {movieMatch && data && (
+      {isLoading ? (
+        <Poster scrollInfo={scrollInfo}>loading</Poster>
+      ) : (
         <>
           <ModalOverlay
-            onClick={handleClick}
+            onClick={handleOverlayClick}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
           />
-          <Poster layoutId={movieMatch.params.id} scrollInfo={scrollInfo}>
+          <Poster layoutId={targetID} scrollInfo={scrollInfo}>
             <BGImg bgPath={utils.makeImagePath(data.backdrop_path)} />
             <span>{'//TODO addContents'}</span>
             <PosterContentsColumn>
@@ -46,8 +47,8 @@ export default ModalPoster;
 const ModalOverlay = styled(motion.div)`
   position: fixed;
   width: 100vw;
-  height: 100vh;
-  background-color: 'black';
+  height: ${constants.innerHeight}px;
+  background-color: rgba(0, 0, 0, 0.5);
   opacity: 0;
 `;
 
