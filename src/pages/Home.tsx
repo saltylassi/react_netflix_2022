@@ -1,16 +1,26 @@
 import React from 'react';
 import Banner from '../components/Banner';
 import ImageSlider from '../components/ImageSlider';
-import MovieModal from '../components/MovieModal';
+import ModalPoster from '../components/ModalPoster';
 import useHome from '../hooks/useHome';
 import BodyLayout from '../layouts/BodyLayout';
 
 interface IProps {}
 
 const Home: React.FC<IProps> = () => {
-  const { npMVLoading, pMVLoading, uMVLoading, nowPlayingMovies, popularMovies, upcomingMovies, movieMatch } =
-    useHome();
+  const {
+    npMVLoading,
+    pMVLoading,
+    uMVLoading,
+    nowPlayingMovies,
+    popularMovies,
+    upcomingMovies,
+    handlePosterClick,
+    id: modalTargetID,
+    movieMatch,
+  } = useHome();
   const isLoading = npMVLoading || pMVLoading || uMVLoading;
+
   return isLoading ? (
     <BodyLayout>loading</BodyLayout>
   ) : (
@@ -26,6 +36,7 @@ const Home: React.FC<IProps> = () => {
         totalLength={nowPlayingMovies?.results.length || 0}
         imgPaths={nowPlayingMovies?.results.map((result) => result.poster_path) || []}
         ids={nowPlayingMovies?.results.map((result) => result.id) || []}
+        handleID={handlePosterClick}
       />
       <ImageSlider
         mainTitle="upcoming"
@@ -33,6 +44,7 @@ const Home: React.FC<IProps> = () => {
         totalLength={upcomingMovies?.results.length || 0}
         imgPaths={upcomingMovies?.results.map((result) => result.poster_path) || []}
         ids={upcomingMovies?.results.map((result) => result.id) || []}
+        handleID={handlePosterClick}
       />
       <ImageSlider
         mainTitle="popular"
@@ -40,10 +52,9 @@ const Home: React.FC<IProps> = () => {
         totalLength={popularMovies?.results.length || 0}
         imgPaths={popularMovies?.results.map((result) => result.poster_path) || []}
         ids={popularMovies?.results.map((result) => result.id) || []}
+        handleID={handlePosterClick}
       />
-      {movieMatch && (
-        <MovieModal movie={nowPlayingMovies?.results.find((movie) => movie.id.toString() === movieMatch.params.id)} />
-      )}
+      {movieMatch && <ModalPoster targetID={modalTargetID} />}
     </BodyLayout>
   );
 };

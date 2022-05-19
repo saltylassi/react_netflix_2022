@@ -2,19 +2,19 @@ import { AnimatePresence, motion, ScrollMotionValues } from 'framer-motion';
 import styled from 'styled-components';
 import { constants } from '../constants/constants';
 import { IMovieResult } from '../hooks/useHome';
-import useMovieModal from '../hooks/useMovieModal';
+import useModalPoster from '../hooks/useModalPoster';
 import { utils } from '../utils';
 
 interface IProps {
-  movie: IMovieResult | undefined;
+  targetID: string;
 }
 
-const MovieModal: React.FC<IProps> = ({ movie }) => {
-  const { movieMatch, handleClick, scrollInfo } = useMovieModal();
+const ModalPoster: React.FC<IProps> = ({ targetID }) => {
+  const { movieMatch, handleClick, scrollInfo, data } = useModalPoster('movie', targetID);
 
   return (
     <AnimatePresence>
-      {movieMatch && movie && (
+      {movieMatch && data && (
         <>
           <ModalOverlay
             onClick={handleClick}
@@ -23,16 +23,16 @@ const MovieModal: React.FC<IProps> = ({ movie }) => {
             transition={{ duration: 0.2 }}
           />
           <Poster layoutId={movieMatch.params.id} scrollInfo={scrollInfo}>
-            <BGImg bgPath={utils.makeImagePath(movie.backdrop_path)} />
+            <BGImg bgPath={utils.makeImagePath(data.backdrop_path)} />
             <span>{'//TODO addContents'}</span>
             <PosterContentsColumn>
-              <Text>{movie.title}</Text>
+              <Text>{data.title}</Text>
             </PosterContentsColumn>
             <PosterContentsColumn>
-              <Text>{movie.overview}</Text>
+              <Text>{data.overview}</Text>
             </PosterContentsColumn>
             <PosterContentsColumn>
-              <Text>{movie.release_date}</Text>
+              <Text>{data.release_date}</Text>
             </PosterContentsColumn>
           </Poster>
         </>
@@ -41,13 +41,13 @@ const MovieModal: React.FC<IProps> = ({ movie }) => {
   );
 };
 
-export default MovieModal;
+export default ModalPoster;
 
 const ModalOverlay = styled(motion.div)`
   position: fixed;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: 'black';
   opacity: 0;
 `;
 

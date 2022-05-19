@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useMatch } from 'react-router-dom';
 import apis from '../apis';
@@ -40,9 +41,25 @@ const useHome = () => {
     apis.getMovies('upcoming')
   );
 
-  const movieMatch = useMatch('/movie/:id');
+  const movieMatch = useMatch('/movies/:id');
 
-  return { npMVLoading, pMVLoading, uMVLoading, nowPlayingMovies, popularMovies, upcomingMovies, movieMatch };
+  const [id, setId] = useState<string>('null');
+
+  const handlePosterClick = (id: string) => {
+    setId(() => id);
+  };
+
+  return {
+    npMVLoading,
+    pMVLoading,
+    uMVLoading,
+    nowPlayingMovies,
+    popularMovies,
+    upcomingMovies,
+    movieMatch,
+    id,
+    handlePosterClick,
+  };
 };
 
 export default useHome;

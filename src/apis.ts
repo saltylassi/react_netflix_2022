@@ -10,6 +10,9 @@ const apis = {
   getMovieWithID: (id: string) => {
     return fetch(`${BASE_URL}/movie/${id}?api_key=${API_KEY}`).then((res) => res.json());
   },
+  getDetail: (type: string, id: string) => {
+    return fetch(`${BASE_URL}/${type}/${id}?api_key=${API_KEY}`).then((res) => res.json());
+  },
   getSearchResults: (type: 'movie' | 'tv', keyword: string, language?: string) => {
     return fetch(`
     ${BASE_URL}/search/${type}?api_key=${API_KEY}&language=${

@@ -10,9 +10,10 @@ interface IProps {
   totalLength: number;
   titles: Array<{ title: string }>;
   ids: Array<number>;
+  handleID: (id: string) => void;
 }
 
-const ImageSlider: React.FC<IProps> = ({ imgPaths, totalLength, titles, ids, mainTitle }) => {
+const ImageSlider: React.FC<IProps> = ({ imgPaths, totalLength, titles, ids, mainTitle, handleID }) => {
   const { idx, increaseIdx, handleExit, handleClick } = useSlider(totalLength);
 
   return (
@@ -40,6 +41,7 @@ const ImageSlider: React.FC<IProps> = ({ imgPaths, totalLength, titles, ids, mai
                 whileHover="hover"
                 onClick={() => {
                   handleClick(ids[index]);
+                  handleID(ids[index].toString());
                 }}
               >
                 <Info variants={animationVars.infoVariants}>
