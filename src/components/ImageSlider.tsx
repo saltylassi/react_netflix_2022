@@ -1,20 +1,18 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import styled from 'styled-components';
 import { constants, padding } from '../constants/constants';
+import { IMovieResult } from '../hooks/useHome';
 import useSlider from '../hooks/useSlider';
 import { utils } from '../utils';
 
 interface IProps {
   mainTitle: string;
-  imgPaths: string[];
-  totalLength: number;
-  titles: Array<{ title: string }>;
-  ids: Array<number>;
+  results: IMovieResult[];
   handleID: (id: string) => void;
 }
 
-const ImageSlider: React.FC<IProps> = ({ imgPaths, totalLength, titles, ids, mainTitle, handleID }) => {
-  const { idx, increaseIdx, handleExit, handleClick } = useSlider(totalLength);
+const ImageSlider: React.FC<IProps> = ({ mainTitle, results, handleID }) => {
+  const { idx, increaseIdx, handleExit, handleClick } = useSlider(results.length);
 
   return (
     <Container>
@@ -30,22 +28,22 @@ const ImageSlider: React.FC<IProps> = ({ imgPaths, totalLength, titles, ids, mai
           exit="exit"
           transition={{ type: 'tween', duration: 1 }}
         >
-          {imgPaths.slice(constants.sliderOffset * idx, constants.sliderOffset * (idx + 1)).map((path, index) => {
+          {results.slice(constants.sliderOffset * idx, constants.sliderOffset * (idx + 1)).map((result, index) => {
             return (
               <Item
-                layoutId={path + ids[index].toString()}
-                key={path + ids[index].toString()}
-                bgPath={utils.makeImagePath(path, 'w500')}
+                layoutId={result.id.toString() + idx}
+                key={result.poster_path + result.id.toString()}
+                bgPath={utils.makeImagePath(result.poster_path, 'w500')}
                 variants={animationVars.scaleVariants}
                 initial="normal"
                 whileHover="hover"
                 onClick={() => {
-                  handleClick(ids[constants.sliderOffset * idx + index]);
-                  handleID(ids[constants.sliderOffset * idx + index].toString());
+                  handleClick(result.id);
+                  handleID(result.id.toString());
                 }}
               >
                 <Info variants={animationVars.infoVariants}>
-                  <InfoText>{titles[constants.sliderOffset * idx + index].title}</InfoText>
+                  <InfoText>{result.title}</InfoText>
                 </Info>
               </Item>
             );

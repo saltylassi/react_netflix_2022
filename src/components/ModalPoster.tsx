@@ -13,16 +13,18 @@ const ModalPoster: React.FC<IProps> = ({ targetID }) => {
 
   return (
     <AnimatePresence>
-      {isLoading ? (
-        <Poster scrollInfo={scrollInfo}>loading</Poster>
-      ) : (
-        <>
-          <ModalOverlay
-            onClick={handleOverlayClick}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-          />
+      <>
+        <ModalOverlay
+          onClick={handleOverlayClick}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+        />
+        {isLoading ? (
+          <Poster layoutId={targetID} scrollInfo={scrollInfo}>
+            loading
+          </Poster>
+        ) : (
           <Poster layoutId={targetID} scrollInfo={scrollInfo}>
             <BGImg bgPath={utils.makeImagePath(data.backdrop_path)} />
             <span>{'//TODO addContents'}</span>
@@ -36,8 +38,8 @@ const ModalPoster: React.FC<IProps> = ({ targetID }) => {
               <Text>{data.release_date}</Text>
             </PosterContentsColumn>
           </Poster>
-        </>
-      )}
+        )}
+      </>
     </AnimatePresence>
   );
 };

@@ -21,7 +21,7 @@ export interface IMovieResult {
   vote_count: number;
 }
 
-interface IResponse {
+interface IMovieResponse {
   dates: {
     maximum: string;
     minimum: string;
@@ -33,13 +33,13 @@ interface IResponse {
 }
 
 const useHome = () => {
-  const { isLoading: npMVLoading, data: nowPlayingMovies } = useQuery<IResponse>(['movies', 'nowPlaying'], () =>
+  const { isLoading: npMVLoading, data: nowPlayingMovies } = useQuery<IMovieResponse>(['movies', 'nowPlaying'], () =>
     apis.getMovies('now_playing')
   );
-  const { isLoading: pMVLoading, data: popularMovies } = useQuery<IResponse>(['movies', 'popular'], () =>
+  const { isLoading: pMVLoading, data: popularMovies } = useQuery<IMovieResponse>(['movies', 'popular'], () =>
     apis.getMovies('popular')
   );
-  const { isLoading: uMVLoading, data: upcomingMovies } = useQuery<IResponse>(['movies', 'upcoming'], () =>
+  const { isLoading: uMVLoading, data: upcomingMovies } = useQuery<IMovieResponse>(['movies', 'upcoming'], () =>
     apis.getMovies('upcoming')
   );
 

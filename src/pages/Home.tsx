@@ -30,30 +30,9 @@ const Home: React.FC<IProps> = () => {
         overview={nowPlayingMovies?.results[0].overview || ''}
         bgImageID={nowPlayingMovies?.results[0].backdrop_path || ''}
       />
-      <ImageSlider
-        mainTitle="nowPlaying"
-        titles={nowPlayingMovies?.results || []}
-        totalLength={nowPlayingMovies?.results.length || 0}
-        imgPaths={nowPlayingMovies?.results.map((result) => result.poster_path) || []}
-        ids={nowPlayingMovies?.results.map((result) => result.id) || []}
-        handleID={handlePosterClick}
-      />
-      <ImageSlider
-        mainTitle="upcoming"
-        titles={upcomingMovies?.results || []}
-        totalLength={upcomingMovies?.results.length || 0}
-        imgPaths={upcomingMovies?.results.map((result) => result.poster_path) || []}
-        ids={upcomingMovies?.results.map((result) => result.id) || []}
-        handleID={handlePosterClick}
-      />
-      <ImageSlider
-        mainTitle="popular"
-        titles={popularMovies?.results || []}
-        totalLength={popularMovies?.results.length || 0}
-        imgPaths={popularMovies?.results.map((result) => result.poster_path) || []}
-        ids={popularMovies?.results.map((result) => result.id) || []}
-        handleID={handlePosterClick}
-      />
+      <ImageSlider mainTitle="nowPlaying" results={nowPlayingMovies?.results || []} handleID={handlePosterClick} />
+      <ImageSlider mainTitle="upcoming" results={upcomingMovies?.results || []} handleID={handlePosterClick} />
+      <ImageSlider mainTitle="popular" results={popularMovies?.results || []} handleID={handlePosterClick} />
       {modalOpen && <ModalPoster targetID={modalTargetID} />}
     </BodyLayout>
   );
