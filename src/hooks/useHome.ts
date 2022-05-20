@@ -1,7 +1,5 @@
-import { useState } from 'react';
 import { useQuery } from 'react-query';
-import { useMatch } from 'react-router-dom';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import apis from '../apis';
 import { isModalOpen } from '../atoms/atoms';
 

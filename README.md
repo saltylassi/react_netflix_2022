@@ -15,5 +15,6 @@ TODO
 
 bug
 
-- [ ] ModalOverlay, Header
-- [ ] ImageSlider
+- [x] ModalOverlay, Header
+- [x] ImageSlider, direction
+- [x] ImageSlider, render loop

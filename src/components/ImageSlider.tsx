@@ -11,17 +11,34 @@ interface IProps {
 }
 
 const ImageSlider: React.FC<IProps> = ({ mainTitle, results }) => {
-  const { idx, increaseIdx, handleExit, handleClick } = useSlider(results.length, mainTitle);
+  const { idx, handleExit, handleClick, handleMoveTo, moveTo } = useSlider(results.length, mainTitle);
+
+  // increase시 animation 방향 박살
+  // 이미 렌더링된놈이 문제
+  // leftBtn을 없애거나 dynamic value 가능 여부 확인
+
+  // 클릭 시 direction을 변경(setState)
+  // direction 변동 시 direction대로 이동(useEffect)
 
   return (
     <Container>
       <MainTitleContainer>
         <MainTitle>{mainTitle}</MainTitle>
       </MainTitleContainer>
+
+      <ArrowButton
+        onClick={() => {
+          handleMoveTo('left');
+        }}
+        position={'left'}
+      >
+        {'<'}
+      </ArrowButton>
       <AnimatePresence initial={false} onExitComplete={handleExit}>
         <Wrapper
           key={idx}
           variants={animationVars.WrapperVariants}
+          custom={moveTo}
           initial="hidden"
           animate="visible"
           exit="exit"
@@ -48,7 +65,14 @@ const ImageSlider: React.FC<IProps> = ({ mainTitle, results }) => {
           })}
         </Wrapper>
       </AnimatePresence>
-      <ArrowButton onClick={increaseIdx}>{'>'}</ArrowButton>
+      <ArrowButton
+        onClick={() => {
+          handleMoveTo('right');
+        }}
+        position={'right'}
+      >
+        {'>'}
+      </ArrowButton>
     </Container>
   );
 };
@@ -118,21 +142,24 @@ const InfoText = styled.span`
   font-size: 1rem;
 `;
 
-const ArrowButton = styled.div`
+const ArrowButton = styled.div<{ position: string }>`
   position: absolute;
-  right: 0.1rem;
+  right: ${(props) => (props.position === 'right' ? '0.1rem' : null)};
+  left: ${(props) => (props.position === 'right' ? null : '0.1rem')};
   height: 100%;
   font-size: 5rem;
   top: 5rem;
+  z-index: 2; // 임시
+  cursor: pointer;
 `;
 
 const animationVars = {
   WrapperVariants: {
-    hidden: {
-      x: constants.innerWidth + 16,
-    },
+    hidden: (moveTo: string) => ({
+      x: moveTo === 'right' ? constants.innerWidth + 16 : 0 - constants.innerWidth - 16,
+    }),
     visible: { x: 0 },
-    exit: { x: 0 - constants.innerWidth - 16 },
+    exit: (moveTo: string) => ({ x: moveTo === 'right' ? 0 - constants.innerWidth - 16 : constants.innerWidth + 16 }),
   },
 
   scaleVariants: {

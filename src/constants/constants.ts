@@ -8,3 +8,5 @@ export const constants = {
   innerHeight: window.innerHeight,
   sliderOffset: 6,
 };
+
+export const UNDEFINED = 'undefined';
