@@ -6,8 +6,8 @@ TODO
 
 - [x] Movie, UI
 
-- [ ] Search, Poster
-- [ ] Search, Link
+- [x] Search, Poster
+- [x] Search, Link
 
 - [x] Detail Screen
 

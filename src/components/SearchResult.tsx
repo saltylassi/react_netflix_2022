@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import useSearchResult, { ISearchMovieResult, ISearchTVResult } from '../hooks/useSearchResult';
+import { utils } from '../utils';
 import PosterLink from './PosterLink';
 
 interface IProps {
@@ -24,14 +25,16 @@ const SearchResult: React.FC<IProps> = ({ title, keyword }) => {
             const typed = result as ISearchMovieResult;
             return (
               <PosterLink targetLink={`detail?type=movie&id=${result.id}`}>
-                <Poster key={result.id}>{typed.title}</Poster>
+                <Poster key={result.id} bgPath={utils.makeImagePath(result.backdrop_path)}></Poster>
+                {typed.title}
               </PosterLink>
             );
           } else {
             const typed = result as ISearchTVResult;
             return (
               <PosterLink targetLink={`detail?type=tv&id=${result.id}`}>
-                <Poster key={result.id}>{typed.name}</Poster>
+                <Poster key={result.id} bgPath={utils.makeImagePath(result.backdrop_path)}></Poster>
+                {typed.name}
               </PosterLink>
             );
           }
@@ -69,6 +72,11 @@ const PosterContainer = styled.div`
   grid-gap: 1rem 0.5rem;
 `;
 
-const Poster = styled.div`
+const Poster = styled.div<{ bgPath: string }>`
   width: 20rem;
+  height: 10rem;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url(${(props) => props.bgPath});
 `;

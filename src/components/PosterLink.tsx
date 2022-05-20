@@ -18,4 +18,6 @@ const PosterLink: React.FC<IProps> = ({ children, targetLink }) => {
 
 export default PosterLink;
 
-const Wrapper = styled(Link)``;
+const Wrapper = styled(Link)`
+  text-align: center;
+`;
