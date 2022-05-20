@@ -2,16 +2,16 @@ netflix_2022
 
 TODO
 
-- [ ] Home, UI
-- [ ] Home, Info Comp Contents
+- [x] Home, UI
 
-- [ ] Movie, UI
-- [ ] Movie, Info Comp Contents
+- [x] Movie, UI
 
 - [ ] Search, Poster
 - [ ] Search, Link
 
-- [ ] Detail Screen
+- [x] Detail Screen
+
+- [ ] Design
 
 bug
 

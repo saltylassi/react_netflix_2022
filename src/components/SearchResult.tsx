@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import useSearchResult, { ISearchMovieResult, ISearchTVResult } from '../hooks/useSearchResult';
+import PosterLink from './PosterLink';
 
 interface IProps {
   title: string;
@@ -22,14 +23,14 @@ const SearchResult: React.FC<IProps> = ({ title, keyword }) => {
           if (isMovie) {
             const typed = result as ISearchMovieResult;
             return (
-              <PosterLink to="/">
+              <PosterLink targetLink={`detail?type=movie&id=${result.id}`}>
                 <Poster key={result.id}>{typed.title}</Poster>
               </PosterLink>
             );
           } else {
             const typed = result as ISearchTVResult;
             return (
-              <PosterLink to="/">
+              <PosterLink targetLink={`detail?type=tv&id=${result.id}`}>
                 <Poster key={result.id}>{typed.name}</Poster>
               </PosterLink>
             );
@@ -71,5 +72,3 @@ const PosterContainer = styled.div`
 const Poster = styled.div`
   width: 20rem;
 `;
-
-const PosterLink = styled(Link)``;

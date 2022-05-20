@@ -47,14 +47,6 @@ const useSearchResult = (type: string, keyword: string) => {
     apis.getSearchResults(type === 'Movies' ? 'movie' : 'tv', keyword)
   );
 
-  useEffect(() => {
-    console.log('data changed', data);
-  }, [data]);
-
-  useEffect(() => {
-    console.log('keyword changed', keyword);
-  }, [keyword]);
-
   return { isLoading, data };
 };
 

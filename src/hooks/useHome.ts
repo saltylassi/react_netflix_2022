@@ -2,6 +2,7 @@ import { useQuery } from 'react-query';
 import { useRecoilValue } from 'recoil';
 import apis from '../apis';
 import { isModalOpen } from '../atoms/atoms';
+import { IResponse } from '../interfaces/interface';
 
 export interface IMovieResult {
   adult: boolean;
@@ -19,26 +20,17 @@ export interface IMovieResult {
   vote_count: number;
 }
 
-interface IMovieResponse {
-  dates: {
-    maximum: string;
-    minimum: string;
-  };
-  page: number;
-  results: Array<IMovieResult>;
-  total_pages: number;
-  total_results: number;
-}
-
 const useHome = () => {
-  const { isLoading: npMVLoading, data: nowPlayingMovies } = useQuery<IMovieResponse>(['movies', 'nowPlaying'], () =>
-    apis.getMovies('now_playing')
+  const { isLoading: npMVLoading, data: nowPlayingMovies } = useQuery<IResponse<IMovieResult>>(
+    ['movies', 'nowPlaying'],
+    () => apis.getMovies('now_playing')
   );
-  const { isLoading: pMVLoading, data: popularMovies } = useQuery<IMovieResponse>(['movies', 'popular'], () =>
+  const { isLoading: pMVLoading, data: popularMovies } = useQuery<IResponse<IMovieResult>>(['movies', 'popular'], () =>
     apis.getMovies('popular')
   );
-  const { isLoading: uMVLoading, data: upcomingMovies } = useQuery<IMovieResponse>(['movies', 'upcoming'], () =>
-    apis.getMovies('upcoming')
+  const { isLoading: uMVLoading, data: upcomingMovies } = useQuery<IResponse<IMovieResult>>(
+    ['movies', 'upcoming'],
+    () => apis.getMovies('upcoming')
   );
 
   const modalOpen = useRecoilValue(isModalOpen);

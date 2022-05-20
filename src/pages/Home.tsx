@@ -20,10 +20,10 @@ const Home: React.FC<IProps> = () => {
         overview={nowPlayingMovies?.results[0].overview || ''}
         bgImageID={nowPlayingMovies?.results[0].backdrop_path || ''}
       />
-      <ImageSlider mainTitle="nowPlaying" results={nowPlayingMovies?.results || []} />
-      <ImageSlider mainTitle="upcoming" results={upcomingMovies?.results || []} />
-      <ImageSlider mainTitle="popular" results={popularMovies?.results || []} />
-      {modalOpen && <ModalPoster />}
+      <ImageSlider mainTitle="Now Playing Movies" results={nowPlayingMovies?.results || []} />
+      <ImageSlider mainTitle="Upcoming Movies" results={upcomingMovies?.results || []} />
+      <ImageSlider mainTitle="Popular Movies" results={popularMovies?.results || []} />
+      {modalOpen && <ModalPoster type="movie" />}
     </BodyLayout>
   );
 };

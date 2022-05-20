@@ -3,14 +3,15 @@ import styled from 'styled-components';
 import { constants, padding } from '../constants/constants';
 import { IMovieResult } from '../hooks/useHome';
 import useSlider from '../hooks/useSlider';
+import { ITVResult } from '../hooks/useTV';
 import { utils } from '../utils';
 
-interface IProps {
+interface IProps<T> {
   mainTitle: string;
-  results: IMovieResult[];
+  results: T[];
 }
 
-const ImageSlider: React.FC<IProps> = ({ mainTitle, results }) => {
+const ImageSlider: React.FC<IProps<IMovieResult | ITVResult>> = ({ mainTitle, results }) => {
   const { idx, handleExit, handleClick, handleMoveTo, moveTo } = useSlider(results.length, mainTitle);
 
   // increase시 animation 방향 박살
@@ -58,7 +59,7 @@ const ImageSlider: React.FC<IProps> = ({ mainTitle, results }) => {
                 }}
               >
                 <Info variants={animationVars.infoVariants}>
-                  <InfoText>{result.title}</InfoText>
+                  <InfoText>{'title' in result ? result.title : result.name}</InfoText>
                 </Info>
               </Item>
             );
@@ -95,10 +96,13 @@ const MainTitleContainer = styled.div`
   align-items: center;
   width: 100%;
   height: 20%;
-  margin: 1rem 1rem;
+  margin: 0.5rem 1rem;
 `;
 
-const MainTitle = styled.span``;
+const MainTitle = styled.span`
+  font-weight: 700;
+  font-size: 1.5rem;
+`;
 
 const Wrapper = styled(motion.div)`
   //TODO 이중 스크롤바 해결

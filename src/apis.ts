@@ -2,8 +2,15 @@ const API_KEY = '255cdd61351ac1942ffaec6975ff307d';
 const BASE_URL = 'https://api.themoviedb.org/3';
 
 const apis = {
-  getMovies: (type: string) => {
+  getMovies: (type: 'now_playing' | 'upcoming' | 'popular') => {
+    //now_playing, upcoming, popular
     return fetch(`${BASE_URL}/movie/${type}?api_key=${API_KEY}`).then((res) => {
+      return res.json();
+    });
+  },
+  getShows: (type: 'airing_today' | 'on_the_air' | 'popular') => {
+    //airing_today, on_the_air, popular
+    return fetch(`${BASE_URL}/tv/${type}?api_key=${API_KEY}`).then((res) => {
       return res.json();
     });
   },

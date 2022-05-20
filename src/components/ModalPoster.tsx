@@ -3,11 +3,14 @@ import styled from 'styled-components';
 import { constants } from '../constants/constants';
 import useModalPoster from '../hooks/useModalPoster';
 import { utils } from '../utils';
+import PosterLink from './PosterLink';
 
-interface IProps {}
+interface IProps {
+  type: 'movie' | 'tv';
+}
 
-const ModalPoster: React.FC<IProps> = () => {
-  const { isLoading, handleOverlayClick, scrollInfo, data, targetID, groupID } = useModalPoster('movie');
+const ModalPoster: React.FC<IProps> = ({ type }) => {
+  const { isLoading, handleOverlayClick, scrollInfo, data, targetID, groupID } = useModalPoster(type);
 
   return (
     <AnimatePresence>
@@ -23,19 +26,21 @@ const ModalPoster: React.FC<IProps> = () => {
             loading
           </Poster>
         ) : (
-          <Poster layoutId={`${groupID}-${targetID}`} scrollInfo={scrollInfo}>
-            <BGImg bgPath={utils.makeImagePath(data.backdrop_path)} />
-            <span>{'//TODO addContents'}</span>
-            <PosterContentsColumn>
-              <Text>{data.title}</Text>
-            </PosterContentsColumn>
-            <PosterContentsColumn>
-              <Text>{data.overview}</Text>
-            </PosterContentsColumn>
-            <PosterContentsColumn>
-              <Text>{data.release_date}</Text>
-            </PosterContentsColumn>
-          </Poster>
+          <PosterLink targetLink={`detail?type=${type}&id=${targetID}`}>
+            <Poster layoutId={`${groupID}-${targetID}`} scrollInfo={scrollInfo}>
+              <BGImg bgPath={utils.makeImagePath(data?.backdrop_path || '')} />
+              <span>{'//TODO addContents'}</span>
+              <PosterContentsColumn>
+                <Text>{data && 'title' in data ? data?.title : data?.name}</Text>
+              </PosterContentsColumn>
+              <PosterContentsColumn>
+                <Text>{data?.overview ? data.overview : 'not exist'}</Text>
+              </PosterContentsColumn>
+              <PosterContentsColumn>
+                <Text>{data && 'release_date' in data ? data?.release_date : data?.first_air_date}</Text>
+              </PosterContentsColumn>
+            </Poster>
+          </PosterLink>
         )}
       </>
     </AnimatePresence>
