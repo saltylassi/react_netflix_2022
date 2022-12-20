@@ -6,7 +6,7 @@ function App() {
   return (
     <MainLayout>
       <Router />
-      <div></div>
+      <span>1232341</span>
     </MainLayout>
   );
 }
